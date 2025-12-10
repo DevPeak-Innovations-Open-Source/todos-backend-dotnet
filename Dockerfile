@@ -4,8 +4,12 @@ EXPOSE 8080
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
+
+# Copy everything
 COPY . .
-RUN dotnet publish -c Release -o /app/publish
+
+# 👇 Specify the correct API project to build/publish
+RUN dotnet publish "./TodoApi.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
